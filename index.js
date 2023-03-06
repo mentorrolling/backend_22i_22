@@ -9,6 +9,7 @@
 // app.listen(8080);
 
 const Server = require("./models/server");
+require("dotenv").config();
 
 const server = new Server();
 

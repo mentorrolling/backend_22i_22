@@ -5,6 +5,7 @@ const cors = require("cors");
 class Server {
   constructor() {
     this.app = express();
+    this.port = process.env.PORT;
     this.usuariosPath = "/api/usuarios";
 
     //middlewares
@@ -33,8 +34,8 @@ class Server {
   }
 
   listen() {
-    this.app.listen(8080, () => {
-      console.log("Server Online port 8080");
+    this.app.listen(this.port, () => {
+      console.log("Server Online port:", this.port);
     });
   }
 }
