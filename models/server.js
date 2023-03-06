@@ -5,11 +5,11 @@ class Server {
   constructor() {
     this.app = express();
     this.usuariosPath = "/api/usuarios";
-    //función para las rutas
-    this.routes();
 
     //middlewares
     this.middlewares();
+    //función para las rutas
+    this.routes();
   }
   middlewares() {
     //CORS
