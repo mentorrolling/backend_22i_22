@@ -1,4 +1,5 @@
 const express = require("express");
+
 const cors = require("cors");
 
 class Server {
@@ -8,6 +9,7 @@ class Server {
 
     //middlewares
     this.middlewares();
+
     //función para las rutas
     this.routes();
   }
