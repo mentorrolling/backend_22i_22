@@ -9,6 +9,12 @@ const {
   usuariosDelete,
 } = require("../controllers/usuarios");
 
+const {
+  esRolValido,
+  emailExiste,
+  usuarioExiste,
+} = require("../helpers/db-validators");
+
 const router = Router();
 
 router.get("/", usuariosGet);
@@ -22,14 +28,33 @@ router.post(
       "La contraseña debe tener un mínimo de 6 caracteres"
     ).isLength({ min: 6 }),
     check("correo", "No es un correo válido").isEmail(),
-    check("rol", "El rol no es válido").isIn(["USER_ROLE", "ADMIN_ROLE"]),
+    check("correo").custom(emailExiste),
+    check("rol").custom(esRolValido),
+    // check("rol", "El rol no es válido").isIn(["USER_ROLE", "ADMIN_ROLE"]),
     validarCampos,
   ],
   usuariosPost
 );
 
-router.put("/:id", usuariosPut);
+router.put(
+  "/:id",
+  [
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(usuarioExiste),
+    check("rol").custom(esRolValido),
+    validarCampos,
+  ],
+  usuariosPut
+);
 
-router.delete("/:id", usuariosDelete);
+router.delete(
+  "/:id",
+  [
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(usuarioExiste),
+    validarCampos,
+  ],
+  usuariosDelete
+);
 
 module.exports = router;
