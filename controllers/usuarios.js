@@ -66,6 +66,8 @@ const usuariosPut = async (req = request, res = response) => {
 const usuariosDelete = async (req = request, res = response) => {
   const { id } = req.params;
 
+  const usuarioAutenticado = req.usuario;
+
   //pasra eliminar el registro
   // const usuarioBorrado = await Usuario.findByIdAndDelete(id);
 
@@ -87,6 +89,7 @@ const usuariosDelete = async (req = request, res = response) => {
   res.json({
     mensaje: "Usuario inactivo",
     usuarioBorrado,
+    usuarioAutenticado,
   });
 };
 
