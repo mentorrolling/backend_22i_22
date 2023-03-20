@@ -20,7 +20,7 @@ const { esAdminRole } = require("../middlewares/validar-roles");
 
 const router = Router();
 
-router.get("/", usuariosGet);
+router.get("/", [validarJWT, esAdminRole], usuariosGet);
 
 router.post(
   "/",
