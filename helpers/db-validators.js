@@ -1,5 +1,7 @@
 const Rol = require("../models/rol");
 const Usuario = require("../models/usuario");
+const Categoria = require("../models/categoria");
+const Curso = require("../models/curso");
 
 //validar role
 const esRolValido = async (rol) => {
@@ -27,8 +29,28 @@ const usuarioExiste = async (id) => {
   }
 };
 
+const categoriaExiste = async (id) => {
+  const existeCategoria = await Categoria.findById(id);
+
+  if (!existeCategoria) {
+    throw new Error(
+      `El id ${id} no corresponde a ninguna categoría registrada`
+    );
+  }
+};
+
+const cursoExiste = async (id) => {
+  const existeCurso = await Curso.findById(id);
+
+  if (!existeCurso) {
+    throw new Error(`El id ${id} no corresponde a ningún curso registrado`);
+  }
+};
+
 module.exports = {
   esRolValido,
   emailExiste,
   usuarioExiste,
+  categoriaExiste,
+  cursoExiste,
 };

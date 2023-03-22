@@ -5,6 +5,7 @@ const { validarCampos } = require("../middlewares/validar_campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-roles");
 //validar si el curso existe🤔
+const { cursoExiste } = require("../helpers/db-validators");
 
 const {
   obtenerCursos,
@@ -22,6 +23,7 @@ router.get(
   [
     check("id", "El id no es válido").isMongoId(),
     //validar si el curso existe🤔
+    check("id").custom(cursoExiste),
     validarCampos,
   ],
   obtenerCurso
@@ -45,6 +47,7 @@ router.put(
     esAdminRole,
     check("id", "El id no es válido").isMongoId(),
     //validar si el curso existe🤔
+    check("id").custom(cursoExiste),
     validarCampos,
   ],
   actualizarCurso
@@ -57,6 +60,7 @@ router.delete(
     esAdminRole,
     check("id", "El id no es válido").isMongoId(),
     //validar si el curso existe
+    check("id").custom(cursoExiste),
     validarCampos,
   ],
   borrarCurso

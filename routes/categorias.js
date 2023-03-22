@@ -9,6 +9,8 @@ const {
   borrarCategoria,
 } = require("../controllers/categorias");
 
+const { categoriaExiste } = require("../helpers/db-validators");
+
 const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-roles");
 const { validarCampos } = require("../middlewares/validar_campos");
@@ -23,6 +25,7 @@ router.get(
     validarJWT,
     check("id", "No es un ID válido").isMongoId(),
     //validar si existe una categoría con ese id
+    check("id").custom(categoriaExiste),
     validarCampos,
   ],
   obtenerCategoria
@@ -46,6 +49,7 @@ router.put(
     esAdminRole,
     check("id", "No es un ID válido").isMongoId(),
     //validar si existe una categoría con ese id,
+    check("id").custom(categoriaExiste),
     check("nombre", "El nombre es obligatorio").notEmpty(),
     validarCampos,
   ],
@@ -59,6 +63,7 @@ router.delete(
     esAdminRole,
     check("id", "No es un ID válido").isMongoId(),
     //validar si existe una categoría con ese id,
+    check("id").custom(categoriaExiste),
     validarCampos,
   ],
   borrarCategoria
