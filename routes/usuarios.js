@@ -7,6 +7,7 @@ const {
   usuariosPost,
   usuariosPut,
   usuariosDelete,
+  usuarioGet,
 } = require("../controllers/usuarios");
 
 const {
@@ -21,6 +22,17 @@ const { esAdminRole } = require("../middlewares/validar-roles");
 const router = Router();
 
 router.get("/", [validarJWT, esAdminRole], usuariosGet);
+
+router.get(
+  "/:id",
+  [
+    validarJWT,
+    check("id", "No es un ID válido").isMongoId(),
+    check("id").custom(usuarioExiste),
+    validarCampos,
+  ],
+  usuarioGet
+);
 
 router.post(
   "/",
